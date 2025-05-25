@@ -12,11 +12,12 @@
 library(data.table)
 library(dplyr)
 library(ggplot2)
+library(DataExplorer) ##
 
 # 1. DATA IMPORT
 
 # Importing the Data into RStudio
-retail_Data = fread("D:\\Year 2\\PFDA\\Assignment\\retail_data 1.csv")
+retail_Data = read.csv("D:\\Year 2\\PFDA\\Assignment\\retail_data 1.csv")
 
 # Pre-Viewing the structure of the Data in RStudio
 str(retail_Data)
@@ -30,6 +31,23 @@ summary(retail_Data)
 
 
 # 2. DATA CLEANING
+
+## check and missing value
+plot_missing(retail_Data)
+
+## Lowercasing all column names
+names(retail_Data) = tolower(names(retail_Data))
+
+## converting character columns into factor
+retail_Data$shipping_method = as.factor(retail_Data$shipping_method)
+retail_Data$order_status = as.factor(retail_Data$order_status)
+retail_Data$product_category = as.factor(retail_Data$product_category)
+retail_Data$payment_method = as.factor(retail_Data$payment_method)
+retail_Data$income = as.factor(retail_Data$income)
+retail_Data$feedback = as.factor(retail_Data$feedback)
+retail_Data$ratings = as.factor(retail_Data$ratings)
+
+
 
 # 2.1. Initial plot of categorical Variables vs Ratings
 
@@ -56,29 +74,29 @@ plot_init_rating_bar = function(data, colname, title = NULL, subtitle = NULL) {
 }
 
 # Shipping Method vs Ratings
-plot_init_rating_bar(retail_Data, "Shipping_Method")
+plot_init_rating_bar(retail_Data, "shipping_method")
 
 # Order_Status vs Ratings
-plot_init_rating_bar(retail_Data, "Order_Status")
+plot_init_rating_bar(retail_Data, "order_status")
 
 # Product_Category vs Ratings
-plot_init_rating_bar(retail_Data, "Product_Category")
+plot_init_rating_bar(retail_Data, "product_category")
 
 # Payment_Methods vs Ratings
-plot_init_rating_bar(retail_Data, "Payment_Method")
+plot_init_rating_bar(retail_Data, "payment_method")
 
 # Income vs Ratings
-plot_init_rating_bar(retail_Data, "Income")
+plot_init_rating_bar(retail_Data, "income")
 
 # Feedback vs Ratings
-plot_init_rating_bar(retail_Data, "Feedback")
+plot_init_rating_bar(retail_Data, "feedback")
 
 
 # Initial Plots for Continuous Variables (couldn't create a function for continuous plot)
 
 # Age vs Ratings
 
-ggplot(retail_Data, aes(x = Ratings, y = Age, fill = Ratings)) +
+ggplot(retail_Data, aes(x = ratings, y = age, fill = ratings)) +
   geom_boxplot() +
   labs(
     title = "Age vs Ratings",
@@ -95,7 +113,7 @@ ggplot(retail_Data, aes(x = Ratings, y = Age, fill = Ratings)) +
 
 # Total_Purchases vs Ratings
 
-ggplot(retail_Data, aes(x = Ratings, y = Total_Purchases, fill = Ratings)) +
+ggplot(retail_Data, aes(x = ratings, y = total_Purchases, fill = ratings)) +
   geom_boxplot() +
   labs(
     title = "Total Purchases vs Ratings",
@@ -112,7 +130,7 @@ ggplot(retail_Data, aes(x = Ratings, y = Total_Purchases, fill = Ratings)) +
 
 # Amount vs Ratings
 
-ggplot(retail_Data, aes(x = Ratings, y = Amount, fill = Ratings)) +
+ggplot(retail_Data, aes(x = ratings, y = amount, fill = ratings)) +
   geom_boxplot() +
   labs(
     title = "Amount vs Ratings",
@@ -129,7 +147,7 @@ ggplot(retail_Data, aes(x = Ratings, y = Amount, fill = Ratings)) +
 
 # Total_Amount vs Ratings
 
-ggplot(retail_Data, aes(x = Ratings, y = Total_Amount, fill = Ratings)) +
+ggplot(retail_Data, aes(x = ratings, y = total_Amount, fill = ratings)) +
   geom_boxplot() +
   labs(
     title = "Total Amount vs Ratings",
@@ -147,58 +165,59 @@ ggplot(retail_Data, aes(x = Ratings, y = Total_Amount, fill = Ratings)) +
 # checking Missing Values
 colSums(is.na(retail_Data))
 
-# Replaceing Blank Values with NA
-retail_Data$Age = replace(retail_Data$Age, retail_Data$Age == "", NA)
+# Replacing Blank Values with NA
+retail_Data$age = replace(retail_Data$age, retail_Data$age == "", NA)
 
-retail_Data$Income = replace(retail_Data$Income, retail_Data$Income == "", NA)
+retail_Data$income = replace(retail_Data$income, retail_Data$income == "", NA)
 
-retail_Data$Total_Purchases = replace(retail_Data$Total_Purchases, retail_Data$Total_Purchases == "", NA)
+retail_Data$total_purchases = replace(retail_Data$total_purchases, retail_Data$total_purchases == "", NA)
 
-retail_Data$Amount = replace(retail_Data$Amount, retail_Data$Amount == "", NA)
+retail_Data$amount = replace(retail_Data$amount, retail_Data$amount == "", NA)
 
-retail_Data$Total_Amount = replace(retail_Data$Total_Amount, retail_Data$Total_Amount == "", NA)
+retail_Data$total_amount = replace(retail_Data$total_amount, retail_Data$total_amount == "", NA)
 
-retail_Data$Product_Category = replace(retail_Data$Product_Category, retail_Data$Product_Category == "", NA)
+retail_Data$product_category = replace(retail_Data$product_category, retail_Data$product_category == "", NA)
 
-retail_Data$Feedback = replace(retail_Data$Feedback, retail_Data$Feedback == "", NA)
+retail_Data$feedback = replace(retail_Data$feedback, retail_Data$feedback == "", NA)
 
-retail_Data$Shipping_Method = replace(retail_Data$Shipping_Method, retail_Data$Shipping_Method == "", NA)
+retail_Data$shipping_method = replace(retail_Data$shipping_method, retail_Data$shipping_method == "", NA)
 
-retail_Data$Payment_Method = replace(retail_Data$Payment_Method, retail_Data$Payment_Method == "", NA)
+retail_Data$payment_method = replace(retail_Data$payment_method, retail_Data$payment_method == "", NA)
 
-retail_Data$Order_Status = replace(retail_Data$Order_Status, retail_Data$Order_Status == "", NA)
+retail_Data$order_status = replace(retail_Data$order_status, retail_Data$order_status == "", NA)
 
-retail_Data$Ratings = replace(retail_Data$Ratings, retail_Data$Ratings == "", NA)
+retail_Data$ratings = replace(retail_Data$ratings, retail_Data$ratings == "", NA)
 
 # checking NA values after converting blank spaces to NA
 colSums(is.na(retail_Data))
 
 # Creating a function to get and replace with the mode for the Categorical Variables
 mode = function(x){
-  uniq = na.omit(unique(x))                                                     # Remove NA's
+  uniq = na.omit(unique(x))                                                     # get uniques, non NA values
   uniq[which.max(tabulate(match(x, uniq)))]                                     # Returns most frequent value
 }
 
-mode(retail_Data$Income)
-mode(retail_Data$Product_Category)
-mode(retail_Data$Feedback)
-mode(retail_Data$Payment_Method)
-mode(retail_Data$Order_Status)
-mode(retail_Data$Shipping_Method)
+mode(retail_Data$income)
+mode(retail_Data$product_category)
+mode(retail_Data$feedback)
+mode(retail_Data$payment_method)
+mode(retail_Data$order_status)
+mode(retail_Data$shipping_method)
+
 
 # Replacing the NA values with the mode Values got from step above
 
-retail_Data$Income = replace(retail_Data$Income, is.na(retail_Data$Income), "Medium")
+retail_Data$income = replace(retail_Data$income, is.na(retail_Data$income), "Medium")
 
-retail_Data$Product_Category = replace(retail_Data$Product_Category, is.na(retail_Data$Product_Category), "Electronics")
+retail_Data$product_category = replace(retail_Data$product_category, is.na(retail_Data$product_category), "Electronics")
 
-retail_Data$Feedback = replace(retail_Data$Feedback, is.na(retail_Data$Feedback), "Excellent")
+retail_Data$feedback = replace(retail_Data$feedback, is.na(retail_Data$feedback), "Excellent")
 
-retail_Data$Payment_Method = replace(retail_Data$Payment_Method, is.na(retail_Data$Payment_Method), "Credit Card")
+retail_Data$payment_method = replace(retail_Data$payment_method, is.na(retail_Data$payment_method), "Credit Card")
 
-retail_Data$Order_Status = replace(retail_Data$Order_Status, is.na(retail_Data$Order_Status), "Delivered")
+retail_Data$order_status = replace(retail_Data$order_status, is.na(retail_Data$order_status), "Delivered")
 
-retail_Data$Shipping_Method = replace(retail_Data$Shipping_Method, is.na(retail_Data$Shipping_Method), "Same-Day")
+retail_Data$shipping_method = replace(retail_Data$shipping_method, is.na(retail_Data$shipping_method), "Same-Day")
 
 # checking if NA values has been replaced for the categorical variables
 
@@ -207,13 +226,13 @@ colSums(is.na(retail_Data))
 
 # Replacing the NA values with the median Values for the continuous variables
 
-retail_Data$Age = replace(retail_Data$Age, is.na(retail_Data$Age), median(retail_Data$Age, na.rm = TRUE))
+retail_Data$age = replace(retail_Data$age, is.na(retail_Data$age), median(retail_Data$age, na.rm = TRUE))
 
-retail_Data$Total_Purchases = replace(retail_Data$Total_Purchases, is.na(retail_Data$Total_Purchases), median(retail_Data$Total_Purchases, na.rm = TRUE))
+retail_Data$total_purchases = replace(retail_Data$total_purchases, is.na(retail_Data$total_purchases), median(retail_Data$total_purchases, na.rm = TRUE))
 
-retail_Data$Amount = replace(retail_Data$Amount, is.na(retail_Data$Amount), median(retail_Data$Amount, na.rm = TRUE))
+retail_Data$amount = replace(retail_Data$amount, is.na(retail_Data$amount), median(retail_Data$amount, na.rm = TRUE))
 
-retail_Data$Total_Amount = replace(retail_Data$Total_Amount, is.na(retail_Data$Total_Amount), median(retail_Data$Total_Amount, na.rm = TRUE))
+retail_Data$total_amount = replace(retail_Data$total_amount, is.na(retail_Data$total_amount), median(retail_Data$total_amount, na.rm = TRUE))
 
 # checking if NA values has been replaced for the continuous variables
 
@@ -231,27 +250,27 @@ sum(is.na(retail_Data$Ratings))
 # Plotting the Categorical variables after cleaning
 
 # Shipping Method vs Ratings
-plot_init_rating_bar(retail_Data, "Shipping_Method")
+plot_init_rating_bar(retail_Data, "shipping_method")
 
 # Order_Status vs Ratings
-plot_init_rating_bar(retail_Data, "Order_Status")
+plot_init_rating_bar(retail_Data, "order_status")
 
 # Product_Category vs Ratings
-plot_init_rating_bar(retail_Data, "Product_Category")
+plot_init_rating_bar(retail_Data, "product_category")
 
 # Payment_Methods vs Ratings
-plot_init_rating_bar(retail_Data, "Payment_Method")
+plot_init_rating_bar(retail_Data, "payment_method")
 
 # Income vs Ratings
-plot_init_rating_bar(retail_Data, "Income")
+plot_init_rating_bar(retail_Data, "income")
 
 # Feedback vs Ratings
-plot_init_rating_bar(retail_Data, "Feedback")
+plot_init_rating_bar(retail_Data, "feedback")
 
 
 # Plotting the Continuous variables after cleaning
 
-ggplot(retail_Data, aes(x = Ratings, y = Age, fill = Ratings)) +
+ggplot(retail_Data, aes(x = ratings, y = age, fill = ratings)) +
   geom_boxplot() +
   labs(
     title = "Age vs Ratings",
@@ -268,7 +287,7 @@ ggplot(retail_Data, aes(x = Ratings, y = Age, fill = Ratings)) +
 
 # Total_Purchases vs Ratings
 
-ggplot(retail_Data, aes(x = Ratings, y = Total_Purchases, fill = Ratings)) +
+ggplot(retail_Data, aes(x = ratings, y = total_purchases, fill = ratings)) +
   geom_boxplot() +
   labs(
     title = "Total Purchases vs Ratings",
@@ -285,7 +304,7 @@ ggplot(retail_Data, aes(x = Ratings, y = Total_Purchases, fill = Ratings)) +
 
 # Amount vs Ratings
 
-ggplot(retail_Data, aes(x = Ratings, y = Amount, fill = Ratings)) +
+ggplot(retail_Data, aes(x = ratings, y = amount, fill = ratings)) +
   geom_boxplot() +
   labs(
     title = "Amount vs Ratings",
@@ -302,7 +321,7 @@ ggplot(retail_Data, aes(x = Ratings, y = Amount, fill = Ratings)) +
 
 # Total_Amount vs Ratings
 
-ggplot(retail_Data, aes(x = Ratings, y = Total_Amount, fill = Ratings)) +
+ggplot(retail_Data, aes(x = ratings, y = total_amount, fill = ratings)) +
   geom_boxplot() +
   labs(
     title = "Total Amount vs Ratings",
