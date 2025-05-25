@@ -197,27 +197,20 @@ mode = function(x){
   uniq[which.max(tabulate(match(x, uniq)))]                                     # Returns most frequent value
 }
 
-mode(retail_Data$income)
-mode(retail_Data$product_category)
-mode(retail_Data$feedback)
-mode(retail_Data$payment_method)
-mode(retail_Data$order_status)
-mode(retail_Data$shipping_method)
-
 
 # Replacing the NA values with the mode Values got from step above
 
-retail_Data$income = replace(retail_Data$income, is.na(retail_Data$income), "Medium")
+retail_Data$income = replace(retail_Data$income, is.na(retail_Data$income), mode(retail_Data$income))
 
-retail_Data$product_category = replace(retail_Data$product_category, is.na(retail_Data$product_category), "Electronics")
+retail_Data$product_category = replace(retail_Data$product_category, is.na(retail_Data$product_category), mode(retail_Data$product_category))
 
-retail_Data$feedback = replace(retail_Data$feedback, is.na(retail_Data$feedback), "Excellent")
+retail_Data$feedback = replace(retail_Data$feedback, is.na(retail_Data$feedback), mode(retail_Data$feedback))
 
-retail_Data$payment_method = replace(retail_Data$payment_method, is.na(retail_Data$payment_method), "Credit Card")
+retail_Data$payment_method = replace(retail_Data$payment_method, is.na(retail_Data$payment_method), mode(retail_Data$payment_method))
 
-retail_Data$order_status = replace(retail_Data$order_status, is.na(retail_Data$order_status), "Delivered")
+retail_Data$order_status = replace(retail_Data$order_status, is.na(retail_Data$order_status), mode(retail_Data$order_status))
 
-retail_Data$shipping_method = replace(retail_Data$shipping_method, is.na(retail_Data$shipping_method), "Same-Day")
+retail_Data$shipping_method = replace(retail_Data$shipping_method, is.na(retail_Data$shipping_method), mode(retail_Data$shipping_method))
 
 # checking if NA values has been replaced for the categorical variables
 
