@@ -30,3 +30,45 @@ ggplot(cleaned_date, aes(x = shipping_method, fill = ratings)) +
     plot.title = element_text(size = 18, face = "bold"),
     legend.position = "top"
   )
+
+#Analysis 1: Is there a relationship between shipping method and ratings
+
+#h0 - There is no relationship between shipping methods and ratings
+#h1 - There is a relationship between shipping methods and ratings
+
+# since both the variables are categorical, Using chi-square test of independence
+
+table_analysis1 = table(cleaned_date$shipping_method, cleaned_date$ratings)
+table_analysis1
+
+chisq_Analysis1 = chisq.test(table_analysis1)
+chisq_Analysis1
+
+# Assume significance level of 0.05 or 5%
+# since the p-value is smaller than the significance level, reject the null hypothesis
+# Hence it can be concluded that there is relationship between shipping methods and ratings
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
