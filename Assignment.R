@@ -331,6 +331,9 @@ ggplot(retail_Data, aes(x = ratings, y = total_amount, fill = ratings)) +
     axis.text.y = element_text(size = 10),
   )
 
+write.csv(retail_Data, "cleaned_data.csv", row.names = FALSE)
+
+
 
 
 
