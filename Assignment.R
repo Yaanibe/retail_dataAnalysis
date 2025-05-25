@@ -54,10 +54,10 @@ retail_Data$ratings = as.factor(retail_Data$ratings)
 # Creating a function for the initial Plotting of graphs for Categorical Variables
 
 plot_init_rating_bar = function(data, colname, title = NULL, subtitle = NULL) {
-  ggplot(data, aes_string(x = colname, fill = "Ratings")) +                     
+  ggplot(data, aes_string(x = colname, fill = "ratings")) +                     
     geom_bar(position = "dodge", color = "black") +                                                    # side-by-side bars with black outline
     labs(
-      title = ifelse(is.null(title), paste(colname, "vs Ratings"), title),                             # if no title is provided go with column vs ratings
+      title = ifelse(is.null(title), paste(colname, "vs ratings"), title),                             # if no title is provided go with column vs ratings
       subtitle = ifelse(is.null(subtitle), paste("Comparison of Ratings across", colname), subtitle),  # if no subtitle is provided use as default
       x = colname,                                                                                     # axis labels
       y = "Number of Transactions",
@@ -113,7 +113,7 @@ ggplot(retail_Data, aes(x = ratings, y = age, fill = ratings)) +
 
 # Total_Purchases vs Ratings
 
-ggplot(retail_Data, aes(x = ratings, y = total_Purchases, fill = ratings)) +
+ggplot(retail_Data, aes(x = ratings, y = total_purchases, fill = ratings)) +
   geom_boxplot() +
   labs(
     title = "Total Purchases vs Ratings",
@@ -147,7 +147,7 @@ ggplot(retail_Data, aes(x = ratings, y = amount, fill = ratings)) +
 
 # Total_Amount vs Ratings
 
-ggplot(retail_Data, aes(x = ratings, y = total_Amount, fill = ratings)) +
+ggplot(retail_Data, aes(x = ratings, y = total_amount, fill = ratings)) +
   geom_boxplot() +
   labs(
     title = "Total Amount vs Ratings",
@@ -163,7 +163,8 @@ ggplot(retail_Data, aes(x = ratings, y = total_Amount, fill = ratings)) +
 
 
 # checking Missing Values
-colSums(is.na(retail_Data))
+colSums(is.na(retail_Data)) # seperately
+sum(is.na(retail_Data)) # al;l together
 
 # Replacing Blank Values with NA
 retail_Data$age = replace(retail_Data$age, retail_Data$age == "", NA)
@@ -190,6 +191,7 @@ retail_Data$ratings = replace(retail_Data$ratings, retail_Data$ratings == "", NA
 
 # checking NA values after converting blank spaces to NA
 colSums(is.na(retail_Data))
+sum(is.na(retail_Data))
 
 # Creating a function to get and replace with the mode for the Categorical Variables
 mode = function(x){
@@ -215,7 +217,7 @@ retail_Data$shipping_method = replace(retail_Data$shipping_method, is.na(retail_
 # checking if NA values has been replaced for the categorical variables
 
 colSums(is.na(retail_Data))
-
+sum(is.na(retail_Data))
 
 # Replacing the NA values with the median Values for the continuous variables
 
@@ -230,15 +232,16 @@ retail_Data$total_amount = replace(retail_Data$total_amount, is.na(retail_Data$t
 # checking if NA values has been replaced for the continuous variables
 
 colSums(is.na(retail_Data))
+sum(is.na(retail_Data))
 
 # Checking NA values for Ratings
-sum(is.na(retail_Data$Ratings))
+sum(is.na(retail_Data$ratings))
 
 # Dropping the rows with NA values for Ratings
-retail_Data = retail_Data[!is.na(retail_Data$Ratings), ]
+retail_Data = retail_Data[!is.na(retail_Data$ratings), ]
 
 # Checking NA values for Ratings after dropping
-sum(is.na(retail_Data$Ratings))
+sum(is.na(retail_Data$ratings))
 
 # Plotting the Categorical variables after cleaning
 
@@ -327,6 +330,8 @@ ggplot(retail_Data, aes(x = ratings, y = total_amount, fill = ratings)) +
     axis.text.x = element_text(angle = 30, hjust = 0.5),
     axis.text.y = element_text(size = 10),
   )
+
+
 
 
 
